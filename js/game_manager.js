@@ -8,6 +8,7 @@ function GameManager(size, InputManager, Actuator, StorageManager) {
 
   this.inputManager.on("move", this.move.bind(this));
   this.inputManager.on("restart", this.restart.bind(this));
+  this.inputManager.on("autoplay", this.autoplay.bind(this));////////////////////////////////////////////////////////////////////////////////////////////////////
   this.inputManager.on("keepPlaying", this.keepPlaying.bind(this));
 
   this.setup();
@@ -18,6 +19,27 @@ GameManager.prototype.restart = function () {
   this.storageManager.clearGameState();
   this.actuator.continueGame(); // Clear the game won/lost message
   this.setup();
+};
+
+//JUEGA SOLO
+GameManager.prototype.autoplay = function (numero) {////////////////////////////////////////////////////////////////////////////////////////////////////
+  // this.storageManager.clearGameState();
+  // this.actuator.continueGame(); // Clear the game won/lost message
+  // this.setup(); 
+  // NI IDEA PARA QUE SONE ESTOS DE ARRIBA
+
+ // console.log("HELLO");
+ //        setTimeout(function(){
+ //            console.log("THIS IS");
+ //            
+ //        }, 2000);
+ //        console.log("DOG");
+  this.move(numero);
+  // for(i=0;i<4;i++){
+  //  this.emit("autoplay",i);
+  // }
+  
+ 
 };
 
 // Keep playing after winning (allows going over 2048)
@@ -136,8 +158,12 @@ GameManager.prototype.move = function (direction) {
   var cell, tile;
 
   var vector     = this.getVector(direction);
+
+
+
   var traversals = this.buildTraversals(vector);
   var moved      = false;
+
 
   // Save the current tile positions and remove merger information
   this.prepareTiles();

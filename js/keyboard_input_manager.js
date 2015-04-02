@@ -21,7 +21,6 @@ KeyboardInputManager.prototype.on = function (event, callback) {
   }
   this.events[event].push(callback);
 };
-
 KeyboardInputManager.prototype.emit = function (event, data) {
   var callbacks = this.events[event];
   if (callbacks) {
@@ -39,10 +38,12 @@ KeyboardInputManager.prototype.listen = function () {
     39: 1, // Right
     40: 2, // Down
     37: 3, // Left
+    
     75: 0, // Vim up
     76: 1, // Vim right
     74: 2, // Vim down
     72: 3, // Vim left
+
     87: 0, // W
     68: 1, // D
     83: 2, // S
@@ -50,7 +51,7 @@ KeyboardInputManager.prototype.listen = function () {
   };
 
   // Respond to direction keys
-  document.addEventListener("keydown", function (event) {
+  var foo = document.addEventListener("keydown", function (event) {
     var modifiers = event.altKey || event.ctrlKey || event.metaKey ||
                     event.shiftKey;
     var mapped    = map[event.which];
@@ -67,10 +68,15 @@ KeyboardInputManager.prototype.listen = function () {
       self.restart.call(self, event);
     }
   });
+  
+
+
+
 
   // Respond to button presses
   this.bindButtonPress(".retry-button", this.restart);
   this.bindButtonPress(".restart-button", this.restart);
+  this.bindButtonPress(".autoplay-button", this.autoplay);/////////////////////////////////////////////////////////////////////////////////////////////////////
   this.bindButtonPress(".keep-playing-button", this.keepPlaying);
 
   // Respond to swipe events
@@ -128,8 +134,28 @@ KeyboardInputManager.prototype.listen = function () {
 };
 
 KeyboardInputManager.prototype.restart = function (event) {
-  event.preventDefault();
-  this.emit("restart");
+        event.preventDefault();
+        this.emit("restart");
+        
+}
+
+function sleep(milliseconds) {
+  var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) {
+    if ((new Date().getTime() - start) > milliseconds){
+      break;
+    }
+  }
+}
+
+KeyboardInputManager.prototype.autoplay = function () {//(event)/////////////////////////////////////////////////
+    // // sleep(1000);
+     
+      // this.emit("autoplay",0);//me voy al GameManager.prototype.autoplay = function ()
+      num = Math.floor((Math.random() * 3) + 0);
+      this.emit("autoplay",num);
+      
+     
 };
 
 KeyboardInputManager.prototype.keepPlaying = function (event) {
