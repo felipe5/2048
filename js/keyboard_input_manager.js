@@ -21,8 +21,10 @@ KeyboardInputManager.prototype.on = function (event, callback) {
   }
   this.events[event].push(callback);
 };
+
 KeyboardInputManager.prototype.emit = function (event, data) {
   var callbacks = this.events[event];
+  console.log("Event: "+callbacks);
   if (callbacks) {
     callbacks.forEach(function (callback) {
       callback(data);
@@ -135,28 +137,31 @@ KeyboardInputManager.prototype.listen = function () {
 
 KeyboardInputManager.prototype.restart = function (event) {
         event.preventDefault();
-        this.emit("restart");
-        
+        this.emit("restart");   
+}
+
+KeyboardInputManager.prototype.autoplay = function (event) {
+        event.preventDefault();
+        var num = Math.floor((Math.random()*4)+0);
+        if (num !== undefined) {
+          this.emit("move", num);
+          this.emit("autoplay");
+        }
+        //sleep(10);
+                   
 }
 
 function sleep(milliseconds) {
   var start = new Date().getTime();
+
   for (var i = 0; i < 1e7; i++) {
     if ((new Date().getTime() - start) > milliseconds){
+      console.log("milliseconds: "+i);
       break;
     }
   }
 }
 
-KeyboardInputManager.prototype.autoplay = function () {//(event)/////////////////////////////////////////////////
-    // // sleep(1000);
-     
-      // this.emit("autoplay",0);//me voy al GameManager.prototype.autoplay = function ()
-      num = Math.floor((Math.random() * 3) + 0);
-      this.emit("autoplay",num);
-      
-     
-};
 
 KeyboardInputManager.prototype.keepPlaying = function (event) {
   event.preventDefault();
@@ -165,6 +170,8 @@ KeyboardInputManager.prototype.keepPlaying = function (event) {
 
 KeyboardInputManager.prototype.bindButtonPress = function (selector, fn) {
   var button = document.querySelector(selector);
+  sleep(1);
   button.addEventListener("click", fn.bind(this));
+  sleep(1);
   button.addEventListener(this.eventTouchend, fn.bind(this));
 };
