@@ -9,8 +9,7 @@ function GameManager(size, InputManager, Actuator, StorageManager) {
   this.startTiles     = 2;
 
   this.inputManager.on("move", this.move.bind(this));
-  this.inputManager.on("restart", this.restart.bind(this));
-  this.inputManager.on("autoplay", this.autoplay.bind(this));////////////////////////////////////////////////////////////////////////////////////////////////////
+  this.inputManager.on("restart", this.restart.bind(this));/////////////////////////////////////////////////////////////////////////////////////////////////
   this.inputManager.on("keepPlaying", this.keepPlaying.bind(this));
 
   this.setup();
@@ -23,33 +22,6 @@ GameManager.prototype.restart = function () {
   this.setup();
 };
 
-// Play the game
-GameManager.prototype.autoplay = function () {
-  if(!this.isGameTerminated()){
-
-    this.inputManager.autoplay(event);
-
-  }
-};
-
-//JUEGA SOLO
-/*GameManager.prototype.autoplay = function (numero) {////////////////////////////////////////////////////////////////////////////////////////////////////
-  // this.storageManager.clearGameState();
-  // this.actuator.continueGame(); // Clear the game won/lost message
-  // this.setup(); 
-  // NI IDEA PARA QUE SONE ESTOS DE ARRIBA
-
- // console.log("HELLO");
- //        setTimeout(function(){
- //            console.log("THIS IS");
- //            
- //        }, 2000);
- //        console.log("DOG");
-  this.move(numero);
-  // for(i=0;i<4;i++){
-  //  this.emit("autoplay",i);
-  // }
-};*/
 
 // Keep playing after winning (allows going over 2048)
 GameManager.prototype.keepPlaying = function () {
@@ -159,6 +131,7 @@ GameManager.prototype.moveTile = function (tile, cell) {
 
 // Move tiles on the grid in the specified direction
 GameManager.prototype.move = function (direction) {
+
   // 0: up, 1: right, 2: down, 3: left
   var self = this;
 
@@ -220,10 +193,37 @@ GameManager.prototype.move = function (direction) {
     if (!this.movesAvailable()) {
       this.over = true; // Game over!
     }
-    sleep(10);
     this.actuate();
   }
 };
+
+GameManager.prototype.autoPlay = function() {
+  var direccion = Math.floor((Math.random()*4)+0)
+  switch(direccion){
+    case 0:
+      console.log("↑");
+      break;
+    case 1:
+      console.log("→");
+      break;
+    case 2:
+      console.log('↓');
+      break;
+    case 3:
+      console.log("←");
+      break;
+  }
+  this.move(direccion);
+  var timeout = 100;//time wait for call recursive 
+  if (!this.over && !this.won) {
+    var self = this;//
+    setTimeout(function(){
+      self.autoPlay();
+    }, timeout);
+  }else{
+    document.getElementById("autoplay").style.display = 'block';
+  }
+}
 
 // Get the vector representing the chosen direction
 GameManager.prototype.getVector = function (direction) {
