@@ -19,6 +19,7 @@ function GameManager(size, InputManager, Actuator, StorageManager) {
 GameManager.prototype.restart = function () {
   this.storageManager.clearGameState();
   this.actuator.continueGame(); // Clear the game won/lost message
+  document.getElementById("autoplay").style.display = 'block';//para que cuando ponga reintentar vuelva a parecer el boton de autoplay
   this.setup();
 };
 
@@ -197,14 +198,28 @@ GameManager.prototype.move = function (direction) {
   }
 };
 
-GameManager.prototype.autoplay = function() {
+GameManager.prototype.autoPlay = function() {
   var direccion = Math.floor((Math.random()*4)+0)
+  switch(direccion){//para saber los movimientos que ocurren
+    case 0:
+      console.log("↑");
+      break;
+    case 1:
+      console.log("→");
+      break;
+    case 2:
+      console.log('↓');
+      break;
+    case 3:
+      console.log("←");
+      break;
+  }
   this.move(direccion);//se envia la direccion a la funcion que mueve las tiles
   var timeout = 100;//tiempo que espero, es como un sleep
   if (!this.over && !this.won) {//para que siga jugando hasta ganar o perder
     var self = this;//
     setTimeout(function(){
-      self.autoplay();
+      self.autoPlay();
     }, timeout);//delay de movimientos
   }
 }

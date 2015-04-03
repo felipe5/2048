@@ -500,6 +500,7 @@ hr {
   float: right; }
 
 .autoplay-button {
+  margin-top: 5px;
   display: inline-block;
   background: #8f7a66;
   border-radius: 3px;
