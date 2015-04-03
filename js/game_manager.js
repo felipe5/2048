@@ -197,15 +197,15 @@ GameManager.prototype.move = function (direction) {
   }
 };
 
-GameManager.prototype.solito = function() {
+GameManager.prototype.autoplay = function() {
   var direccion = Math.floor((Math.random()*4)+0)
-  this.move(direccion);
+  this.move(direccion);//se envia la direccion a la funcion que mueve las tiles
   var timeout = 100;//tiempo que espero, es como un sleep
-  if (!this.over && !this.won) {
+  if (!this.over && !this.won) {//para que siga jugando hasta ganar o perder
     var self = this;//
     setTimeout(function(){
-      self.solito();
-    }, timeout);
+      self.autoplay();
+    }, timeout);//delay de movimientos
   }
 }
 
