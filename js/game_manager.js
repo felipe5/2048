@@ -19,6 +19,7 @@ function GameManager(size, InputManager, Actuator, StorageManager) {
 GameManager.prototype.restart = function () {
   this.storageManager.clearGameState();
   this.actuator.continueGame(); // Clear the game won/lost message
+  document.getElementById("autoplay").style.display = 'block';
   this.setup();
 };
 
@@ -220,8 +221,6 @@ GameManager.prototype.autoPlay = function() {
     setTimeout(function(){
       self.autoPlay();
     }, timeout);
-  }else{
-    document.getElementById("autoplay").style.display = 'block';
   }
 }
 
