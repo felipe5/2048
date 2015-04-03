@@ -24,7 +24,6 @@ KeyboardInputManager.prototype.on = function (event, callback) {
 
 KeyboardInputManager.prototype.emit = function (event, data) {
   var callbacks = this.events[event];
-  console.log("Event: "+callbacks);
   if (callbacks) {
     callbacks.forEach(function (callback) {
       callback(data);
@@ -73,12 +72,11 @@ KeyboardInputManager.prototype.listen = function () {
   
 
 
-//
+
 
   // Respond to button presses
   this.bindButtonPress(".retry-button", this.restart);
   this.bindButtonPress(".restart-button", this.restart);
-  this.bindButtonPress(".autoplay-button", this.autoplay);/////////////////////////////////////////////////////////////////////////////////////////////////////
   this.bindButtonPress(".keep-playing-button", this.keepPlaying);
 
   // Respond to swipe events
@@ -140,17 +138,6 @@ KeyboardInputManager.prototype.restart = function (event) {
         this.emit("restart");   
 }
 
-KeyboardInputManager.prototype.autoplay = function (event) {
-        event.preventDefault();
-        var num = Math.floor((Math.random()*4)+0);
-        if (num !== undefined) {
-          this.emit("move", num);
-          this.emit("autoplay");
-        }
-        //sleep(10);
-                   
-}
-
 function sleep(milliseconds) {
   var start = new Date().getTime();
 
@@ -170,8 +157,6 @@ KeyboardInputManager.prototype.keepPlaying = function (event) {
 
 KeyboardInputManager.prototype.bindButtonPress = function (selector, fn) {
   var button = document.querySelector(selector);
-  sleep(1);
   button.addEventListener("click", fn.bind(this));
-  sleep(1);
   button.addEventListener(this.eventTouchend, fn.bind(this));
 };
