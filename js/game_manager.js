@@ -23,8 +23,17 @@ GameManager.prototype.restart = function () {
   this.setup();
 };
 
+// Play the game
+GameManager.prototype.autoplay = function () {
+  if(!this.isGameTerminated()){
+
+    this.inputManager.autoplay(event);
+
+  }
+};
+
 //JUEGA SOLO
-GameManager.prototype.autoplay = function (numero) {////////////////////////////////////////////////////////////////////////////////////////////////////
+/*GameManager.prototype.autoplay = function (numero) {////////////////////////////////////////////////////////////////////////////////////////////////////
   // this.storageManager.clearGameState();
   // this.actuator.continueGame(); // Clear the game won/lost message
   // this.setup(); 
@@ -40,9 +49,7 @@ GameManager.prototype.autoplay = function (numero) {////////////////////////////
   // for(i=0;i<4;i++){
   //  this.emit("autoplay",i);
   // }
-  
- 
-};
+};*/
 
 // Keep playing after winning (allows going over 2048)
 GameManager.prototype.keepPlaying = function () {
@@ -213,7 +220,7 @@ GameManager.prototype.move = function (direction) {
     if (!this.movesAvailable()) {
       this.over = true; // Game over!
     }
-
+    sleep(10);
     this.actuate();
   }
 };
