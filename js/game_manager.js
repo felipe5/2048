@@ -21,6 +21,7 @@ GameManager.prototype.restart = function () {
   this.actuator.continueGame(); // Clear the game won/lost message
   document.getElementById("autoplay").style.display = 'block';//para que cuando ponga reintentar vuelva a parecer el boton de autoplay
   document.getElementById("restart").style.display = 'block';
+  document.getElementById("puntero").style.display = 'none';
   this.setup();
 };
 
@@ -200,19 +201,25 @@ GameManager.prototype.move = function (direction) {
 };
 
 GameManager.prototype.autoPlay = function(dir) {
+  document.getElementById("puntero").style.display = 'block';
   var direccion = dir;
   switch(direccion){//para saber los movimientos que ocurren
     case 0:
-      console.log("↑");
+      document.getElementById("puntero").innerHTML = "Direccion : ↑"
+      //document.getElementById("paso").style.display = 'block';
+      //console.log("");
       break;
     case 1:
-      console.log("→");
+      document.getElementById("puntero").innerHTML = "Direccion : →"
+      //console.log("→");
       break;
     case 2:
-      console.log("↓");
+      document.getElementById("puntero").innerHTML = "Direccion : ↓"
+      //console.log("↓");
       break;
     case 3:
-      console.log("←");
+      document.getElementById("puntero").innerHTML = "Direccion : ←"
+      //console.log("←");
       break;
   }
   if(direccion==4){
