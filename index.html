@@ -28,7 +28,7 @@
 
     <div class="above-game">
       <p class="game-intro">Join the numbers and get to the <strong>2048 tile!</strong></p>
-      <a class="restart-button">New Game</a>
+      <a id="restart" class="restart-button">New Game</a>
       <a id="autoplay" onclick="callAutoplay()" class="autoplay-button">Autoplay</a>
     </div>
 
@@ -103,6 +103,7 @@ function callAutoplay(){
   var game_terminated = object_game_manager.isGameTerminated();
   if(!game_terminated){
     document.getElementById("autoplay").style.display = 'none';
+    document.getElementById("restart").style.display = 'none';
     object_game_manager.autoPlay(0);
   }
 }

@@ -20,6 +20,7 @@ GameManager.prototype.restart = function () {
   this.storageManager.clearGameState();
   this.actuator.continueGame(); // Clear the game won/lost message
   document.getElementById("autoplay").style.display = 'block';//para que cuando ponga reintentar vuelva a parecer el boton de autoplay
+  document.getElementById("restart").style.display = 'block';
   this.setup();
 };
 
