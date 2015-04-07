@@ -5,7 +5,7 @@ function GameManager(size, InputManager, Actuator, StorageManager) {
   this.inputManager   = new InputManager;
   this.storageManager = new StorageManager;
   this.actuator       = new Actuator;
-
+  i=0;
   this.startTiles     = 2;
 
   this.inputManager.on("move", this.move.bind(this));
@@ -198,8 +198,8 @@ GameManager.prototype.move = function (direction) {
   }
 };
 
-GameManager.prototype.autoPlay = function() {
-  var direccion = Math.floor((Math.random()*4)+0)
+GameManager.prototype.autoPlay = function(dir) {
+  var direccion = dir;
   switch(direccion){//para saber los movimientos que ocurren
     case 0:
       console.log("↑");
@@ -208,18 +208,22 @@ GameManager.prototype.autoPlay = function() {
       console.log("→");
       break;
     case 2:
-      console.log('↓');
+      console.log("↓");
       break;
     case 3:
       console.log("←");
       break;
+  }
+  if(direccion==4){
+    direccion=0;
   }
   this.move(direccion);//se envia la direccion a la funcion que mueve las tiles
   var timeout = 100;//tiempo que espero, es como un sleep
   if (!this.over && !this.won) {//para que siga jugando hasta ganar o perder
     var self = this;//
     setTimeout(function(){
-      self.autoPlay();
+      direccion++;
+      self.autoPlay(direccion);//self por que si no pesca el this de afuera
     }, timeout);//delay de movimientos
   }
 }

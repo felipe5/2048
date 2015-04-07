@@ -103,7 +103,7 @@ function callAutoplay(){
   var game_terminated = object_game_manager.isGameTerminated();
   if(!game_terminated){
     document.getElementById("autoplay").style.display = 'none';
-    object_game_manager.autoPlay();
+    object_game_manager.autoPlay(0);
   }
 }
 </script>
